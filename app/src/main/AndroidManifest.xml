@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Coronavirus"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.view.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Coronavirus">
             <intent-filter>
