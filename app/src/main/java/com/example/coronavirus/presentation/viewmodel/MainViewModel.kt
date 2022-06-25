@@ -41,27 +41,29 @@ class MainViewModel : ViewModel() {
     fun convertDailyCaseToWeeklyCase(dailyCaseList: List<DailyCase>): List<WeeklyCase> {
         val weeklyCaseList = mutableListOf<WeeklyCase>()
 
-        var baseDay = LocalDate.now().with(previous(SUNDAY))
+        var baseDay = LocalDate.parse(dailyCaseList.first().date).with(previous(SUNDAY))
         var cumCases = 0
-        val dailyNewCaseList = mutableListOf<Int>()
-
+        var dailyNewCaseList = mutableListOf<Int>()
 
         dailyCaseList.forEach {
-            if (LocalDate.parse(it.date).toEpochDay() > baseDay.toEpochDay()) {
-                cumCases += it.newCasesByPublishDate
-                dailyNewCaseList.add(it.newCasesByPublishDate)
-            } else {
-                baseDay = baseDay.minusWeeks(1)
+            if (LocalDate.parse(it.date).toEpochDay() < baseDay.toEpochDay()) {
                 weeklyCaseList.add(
                     WeeklyCase(
                         baseDay,
                         cumCases,
-                        dailyNewCaseList
+                        dailyNewCaseList,
+                        false
                     )
                 )
+
+                baseDay = baseDay.minusWeeks(1)
                 cumCases = 0
-                dailyNewCaseList.clear()
+                dailyNewCaseList = mutableListOf()
             }
+
+
+            cumCases += it.newCasesByPublishDate
+            dailyNewCaseList.add(it.newCasesByPublishDate)
         }
 
         return weeklyCaseList
@@ -71,5 +73,6 @@ class MainViewModel : ViewModel() {
 data class WeeklyCase(
     val date: LocalDate,
     val cumCases: Int,
-    val dailyNewCase: List<Int>
+    val dailyNewCase: List<Int>,
+    var expand: Boolean
 )
