@@ -1,8 +1,10 @@
 package com.example.coronavirus.presentation.view
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.coronavirus.databinding.DailyCaseItemBinding
 import com.example.coronavirus.databinding.WeeklyCaseItemBinding
 import com.example.coronavirus.presentation.viewmodel.WeeklyCase
 
@@ -26,6 +28,25 @@ class WeeklyCaseAdapter(private val dataSet: MutableList<WeeklyCase>) :
             val data = dataSet[position]
             date.text = data.date.toString()
             caseNumber.text = data.cumCases.toString()
+
+            if (data.expand) {
+                dailyList.visibility = View.VISIBLE
+                dailyList.removeAllViews()
+                data.dailyNewCase.forEach {
+                    val binding =
+                        DailyCaseItemBinding.inflate(LayoutInflater.from(viewHolder.itemView.context))
+                    binding.number.text = it.toString()
+                    dailyList.addView(binding.root)
+                }
+            } else {
+                dailyList.visibility = View.GONE
+            }
+
+
+            weeklyTitle.setOnClickListener {
+                data.expand = !data.expand
+                notifyItemChanged(position)
+            }
         }
     }
 
