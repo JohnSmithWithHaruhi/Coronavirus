@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coronavirus.databinding.ActivityMainBinding
 import com.example.coronavirus.presentation.viewmodel.MainViewModel
-import com.example.coronavirus.presentation.viewmodel.WeeklyCaseAdapter
 
 class MainActivity : AppCompatActivity() {
 
