@@ -7,9 +7,14 @@ import kotlinx.coroutines.withContext
 
 class CovidRepositoryImpl : CovidRepository {
     private val covidDatasource = CovidDatasource()
+
     override suspend fun fetchDailyCaseList(): List<DailyCase> {
         return withContext(Dispatchers.IO) {
-            return@withContext covidDatasource.getCase().execute().body()!!.dailyCase
+            val response = covidDatasource.getCase("overview").execute()
+            if (response.isSuccessful) {
+                response.body()?.let { return@withContext it.dailyCase }
+            }
+            return@withContext emptyList()
         }
     }
 }
