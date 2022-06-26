@@ -2,6 +2,7 @@ package com.example.coronavirus.presentation.viewmodel
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +11,6 @@ import com.example.coronavirus.data.entity.DailyCase
 import com.example.coronavirus.data.repository.CovidRepository
 import com.example.coronavirus.data.repository.CovidRepositoryImpl
 import kotlinx.coroutines.launch
-import org.jetbrains.annotations.TestOnly
 import java.time.DayOfWeek.SATURDAY
 import java.time.DayOfWeek.SUNDAY
 import java.time.LocalDate
@@ -85,8 +85,12 @@ class MainViewModel : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    @TestOnly
+    @VisibleForTesting
     fun convertDailyCaseToWeeklyCase(dailyCaseList: List<DailyCase>): List<WeeklyCase> {
+        if (dailyCaseList.isEmpty()) {
+            return emptyList()
+        }
+
         val weeklyCaseList = mutableListOf<WeeklyCase>()
 
         var baseDay = LocalDate.parse(dailyCaseList.first().date).with(previous(SUNDAY))
