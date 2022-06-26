@@ -26,10 +26,6 @@ import java.util.*
  */
 class MainViewModel : ViewModel() {
 
-    enum class SearchArea {
-        UnitedKingdom, England, NorthernIreland, Scotland, Wales
-    }
-
     private val covidRepository: CovidRepository = CovidRepositoryImpl()
     private val weeklyCaseList = MutableLiveData<List<WeeklyCase>>()
     private val searchDialog = MutableLiveData<SearchDialog>()
@@ -61,7 +57,7 @@ class MainViewModel : ViewModel() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 weeklyCaseList.postValue(
                     convertDailyCaseToWeeklyCase(
-                        covidRepository.fetchDailyCaseList(SearchArea.values()[selectedItem])
+                        covidRepository.fetchDailyCaseList(CovidRepository.SearchArea.values()[selectedItem])
                     )
                 )
             }
@@ -157,6 +153,13 @@ data class DailyNum(
  */
 data class SearchDialog(
     val selectedItem: Int = 0,
-    val itemList: List<String> = MainViewModel.SearchArea.values().map { it.name },
+    val itemList: List<String> =
+        CovidRepository.SearchArea.values().map {
+            when (it) {
+                CovidRepository.SearchArea.UnitedKingdom -> "United Kingdom"
+                CovidRepository.SearchArea.NorthernIreland -> "Northern Ireland"
+                else -> it.name
+            }
+        },
     val isShowDialog: Boolean = false
 )

@@ -2,7 +2,6 @@ package com.example.coronavirus.data.repository
 
 import com.example.coronavirus.data.datasource.CovidNetworkDatasource
 import com.example.coronavirus.data.entity.DailyCase
-import com.example.coronavirus.presentation.viewmodel.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -12,11 +11,11 @@ import kotlinx.coroutines.withContext
 class CovidRepositoryImpl : CovidRepository {
     private val covidNetworkDatasource = CovidNetworkDatasource()
 
-    override suspend fun fetchDailyCaseList(area: MainViewModel.SearchArea): List<DailyCase> {
+    override suspend fun fetchDailyCaseList(area: CovidRepository.SearchArea): List<DailyCase> {
         return withContext(Dispatchers.IO) {
             val areaType = when (area) {
-                MainViewModel.SearchArea.UnitedKingdom -> "overview"
-                MainViewModel.SearchArea.NorthernIreland -> "nation;areaName=Northern Ireland"
+                CovidRepository.SearchArea.UnitedKingdom -> "overview"
+                CovidRepository.SearchArea.NorthernIreland -> "nation;areaName=Northern Ireland"
                 else -> "nation;areaName=${area.name}"
             }
             val response = covidNetworkDatasource.getCases(areaType).execute()
