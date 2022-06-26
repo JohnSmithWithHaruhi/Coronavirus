@@ -55,11 +55,11 @@ class MainViewModel : ViewModel() {
         val selectedItem = searchDialog.value?.selectedItem ?: 0
         viewModelScope.launch {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                weeklyCaseList.postValue(
-                    convertDailyCaseToWeeklyCase(
-                        covidRepository.fetchDailyCaseList(CovidRepository.SearchArea.values()[selectedItem])
-                    )
-                )
+                val area = CovidRepository.SearchArea.values()[selectedItem]
+                val dailyCaseList = covidRepository.fetchDailyCaseList(area)
+                convertDailyCaseToWeeklyCase(dailyCaseList).let {
+                    weeklyCaseList.postValue(it)
+                }
             }
         }
     }
