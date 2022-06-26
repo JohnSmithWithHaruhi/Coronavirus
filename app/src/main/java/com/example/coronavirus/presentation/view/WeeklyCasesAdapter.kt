@@ -42,7 +42,7 @@ class WeeklyCasesAdapter(private val weeklyCaseList: MutableList<WeeklyCase>) :
             weeklyCaseNumber.text = weeklyCase.weeklyCumCases.formatNumber()
             totalCaseNumber.text = "Total: ${weeklyCase.totalCumCases.formatNumber()}"
 
-            if (weeklyCase.expand) {
+            if (weeklyCase.isExpand) {
                 weeklyCaseNumber.visibility = View.INVISIBLE
                 totalCaseNumber.visibility = View.VISIBLE
                 dailyList.visibility = View.VISIBLE
@@ -75,7 +75,7 @@ class WeeklyCasesAdapter(private val weeklyCaseList: MutableList<WeeklyCase>) :
             }
 
             weeklyTitle.setOnClickListener {
-                weeklyCase.expand = !weeklyCase.expand
+                weeklyCase.isExpand = !weeklyCase.isExpand
                 notifyItemChanged(position)
             }
         }
