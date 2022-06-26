@@ -28,3 +28,8 @@
 
 ### Dark Mode
 <img src="https://user-images.githubusercontent.com/12123123/175833776-8902fed6-de5f-4d8f-8028-8c42cf3a3790.png" width="320"/>    <img src="https://user-images.githubusercontent.com/12123123/175833779-053514bc-bb9c-442b-ada4-7bb8dade4392.png" width="320"/>
+
+## What's next
+- Replaces livedata to stateflow.
+- Tries android jetpack compose.
+- Replaces retrofit and gson to other libraries.
