@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.coronavirus.R
 import com.example.coronavirus.databinding.ActivityMainBinding
 import com.example.coronavirus.presentation.viewmodel.MainViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Main screen for this application.
@@ -28,12 +30,34 @@ class MainActivity : AppCompatActivity() {
                 this@MainActivity.adapter = it
             }
         }
+
         binding.fab.setOnClickListener {
-            viewModel.fetchWeeklyCaseList()
+            viewModel.onShowDialog()
         }
 
         viewModel.weeklyCaseList().observe(this) {
             adapter.updateDateSet(it)
         }
+
+        viewModel.searchDialog().observe(this) {
+            if (it.isShowDialog) {
+                var selectedPosition = it.selectedItem
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.dialog_search_title)
+                    .setSingleChoiceItems(
+                        it.itemList.toTypedArray(),
+                        it.selectedItem
+                    ) { _, position ->
+                        selectedPosition = position
+                    }
+                    .setNegativeButton(R.string.dialog_search_negative) { _, _ -> }
+                    .setPositiveButton(R.string.dialog_search_positive) { _, _ ->
+                        viewModel.onAreaSelected(selectedPosition)
+                    }
+                    .show()
+            }
+        }
+
+        viewModel.fetchWeeklyCaseList()
     }
 }

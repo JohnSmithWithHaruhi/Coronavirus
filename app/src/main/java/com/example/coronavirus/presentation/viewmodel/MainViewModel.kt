@@ -26,8 +26,13 @@ import java.util.*
  */
 class MainViewModel : ViewModel() {
 
+    enum class SearchArea {
+        UnitedKingdom, England, NorthernIreland, Scotland, Wales
+    }
+
     private val covidRepository: CovidRepository = CovidRepositoryImpl()
     private val weeklyCaseList = MutableLiveData<List<WeeklyCase>>()
+    private val searchDialog = MutableLiveData<SearchDialog>()
 
     /**
      * Weekly case list
@@ -38,19 +43,41 @@ class MainViewModel : ViewModel() {
         return weeklyCaseList
     }
 
+    fun searchDialog(): LiveData<SearchDialog> {
+        return searchDialog
+    }
+
     /**
      * Fetch weekly case list.
      */
     fun fetchWeeklyCaseList() {
+        val selectedItem = searchDialog.value?.selectedItem ?: 0
         viewModelScope.launch {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 weeklyCaseList.postValue(
                     convertDailyCaseToWeeklyCase(
-                        covidRepository.fetchDailyCaseList()
+                        covidRepository.fetchDailyCaseList(SearchArea.values()[selectedItem])
                     )
                 )
             }
         }
+    }
+
+    fun onShowDialog() {
+        searchDialog.postValue(
+            SearchDialog(
+                selectedItem = searchDialog.value?.selectedItem ?: 0,
+                isShowDialog = true
+            )
+        )
+    }
+
+    /**
+     *
+     */
+    fun onAreaSelected(position: Int) {
+        searchDialog.value = SearchDialog(selectedItem = position, isShowDialog = false)
+        fetchWeeklyCaseList()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -72,7 +99,7 @@ class MainViewModel : ViewModel() {
                         weeklyCumCases = weeklyCumCases,
                         totalCumCases = totalCumCases,
                         dailyCaseList = dailyList,
-                        expand = false
+                        isExpand = false
                     )
                 )
 
@@ -106,7 +133,7 @@ data class WeeklyCase(
     val weeklyCumCases: Int,
     val totalCumCases: Int,
     val dailyCaseList: List<DailyNum>,
-    var expand: Boolean
+    var isExpand: Boolean
 )
 
 /**
@@ -115,4 +142,10 @@ data class WeeklyCase(
 data class DailyNum(
     val dayOfWeek: String,
     val dailyCumCases: Int,
+)
+
+data class SearchDialog(
+    val selectedItem: Int = 0,
+    val itemList: List<String> = MainViewModel.SearchArea.values().map { it.name },
+    val isShowDialog: Boolean = false
 )
