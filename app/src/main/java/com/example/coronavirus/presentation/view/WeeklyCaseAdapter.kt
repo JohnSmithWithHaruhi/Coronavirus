@@ -3,7 +3,9 @@ package com.example.coronavirus.presentation.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.coronavirus.R
 import com.example.coronavirus.databinding.DailyCaseItemBinding
 import com.example.coronavirus.databinding.WeeklyCaseItemBinding
 import com.example.coronavirus.presentation.viewmodel.WeeklyCase
@@ -24,6 +26,7 @@ class WeeklyCaseAdapter(private val dataSet: MutableList<WeeklyCase>) :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        val context = viewHolder.binding.root.context
         with(viewHolder.binding) {
             val data = dataSet[position]
             date.text = data.date.toString()
@@ -34,12 +37,26 @@ class WeeklyCaseAdapter(private val dataSet: MutableList<WeeklyCase>) :
                 dailyList.removeAllViews()
                 data.dailyNewCase.forEach {
                     val binding =
-                        DailyCaseItemBinding.inflate(LayoutInflater.from(viewHolder.itemView.context))
+                        DailyCaseItemBinding.inflate(LayoutInflater.from(context))
                     binding.number.text = it.toString()
                     dailyList.addView(binding.root)
                 }
+                expandIcon.setImageDrawable(
+                    ResourcesCompat.getDrawable(
+                        context.resources,
+                        R.drawable.ic_expand_less_24dp,
+                        context.theme
+                    )
+                )
             } else {
                 dailyList.visibility = View.GONE
+                expandIcon.setImageDrawable(
+                    ResourcesCompat.getDrawable(
+                        context.resources,
+                        R.drawable.ic_expand_more_24dp,
+                        context.theme
+                    )
+                )
             }
 
 
