@@ -15,15 +15,26 @@ import java.time.DayOfWeek.SUNDAY
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters.previous
 
+/**
+ * Main activity's view model.
+ */
 class MainViewModel : ViewModel() {
 
     private val covidRepository: CovidRepository = CovidRepositoryImpl()
     private val weeklyCaseList = MutableLiveData<List<WeeklyCase>>()
 
+    /**
+     * Weekly case list
+     *
+     * @return provides live data type for activity to observe.
+     */
     fun weeklyCaseList(): LiveData<List<WeeklyCase>> {
         return weeklyCaseList
     }
 
+    /**
+     * Fetch weekly case list.
+     */
     fun fetchWeeklyCaseList() {
         viewModelScope.launch {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -70,6 +81,9 @@ class MainViewModel : ViewModel() {
     }
 }
 
+/**
+ * View model class to hold all view data.
+ */
 data class WeeklyCase(
     val date: LocalDate,
     val cumCases: Int,

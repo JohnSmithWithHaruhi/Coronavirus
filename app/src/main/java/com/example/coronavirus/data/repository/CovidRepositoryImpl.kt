@@ -1,16 +1,19 @@
 package com.example.coronavirus.data.repository
 
-import com.example.coronavirus.data.datasource.CovidDatasource
+import com.example.coronavirus.data.datasource.CovidNetworkDatasource
 import com.example.coronavirus.data.entity.DailyCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * Class implemented [CovidRepository].
+ */
 class CovidRepositoryImpl : CovidRepository {
-    private val covidDatasource = CovidDatasource()
+    private val covidNetworkDatasource = CovidNetworkDatasource()
 
     override suspend fun fetchDailyCaseList(): List<DailyCase> {
         return withContext(Dispatchers.IO) {
-            val response = covidDatasource.getCase("overview").execute()
+            val response = covidNetworkDatasource.getCases("overview").execute()
             if (response.isSuccessful) {
                 response.body()?.let { return@withContext it.dailyCase }
             }

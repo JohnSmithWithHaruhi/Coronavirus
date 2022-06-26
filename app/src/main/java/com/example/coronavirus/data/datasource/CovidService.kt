@@ -5,6 +5,9 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/**
+ * This interface is for retrofit.
+ */
 interface CovidService {
     @GET("data")
     fun getCases(

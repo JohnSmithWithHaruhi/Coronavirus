@@ -5,7 +5,10 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class CovidDatasource {
+/**
+ * Provides covid data from network.
+ */
+class CovidNetworkDatasource {
     companion object {
         private const val baseUrl = "https://api.coronavirus.data.gov.uk/v1/"
         private const val structure =
@@ -18,7 +21,12 @@ class CovidDatasource {
         .build()
     private val service: CovidService = retrofit.create(CovidService::class.java)
 
-    fun getCase(areaType: String): Call<Cases> {
+    /**
+     * Gets whole cases by area type.
+     *
+     * @param areaType the type of area which you want to search.
+     */
+    fun getCases(areaType: String): Call<Cases> {
         return service.getCases("areaType=${areaType}", structure)
     }
 

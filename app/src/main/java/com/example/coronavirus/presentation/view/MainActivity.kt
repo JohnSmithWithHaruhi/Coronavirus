@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coronavirus.databinding.ActivityMainBinding
 import com.example.coronavirus.presentation.viewmodel.MainViewModel
 
+/**
+ * Main screen for this application.
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: WeeklyCaseAdapter
+    private lateinit var adapter: WeeklyCasesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerView.run {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = WeeklyCaseAdapter(mutableListOf()).also {
+            adapter = WeeklyCasesAdapter(mutableListOf()).also {
                 this@MainActivity.adapter = it
             }
         }

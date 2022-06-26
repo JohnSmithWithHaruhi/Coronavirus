@@ -10,9 +10,17 @@ import com.example.coronavirus.databinding.DailyCaseItemBinding
 import com.example.coronavirus.databinding.WeeklyCaseItemBinding
 import com.example.coronavirus.presentation.viewmodel.WeeklyCase
 
-class WeeklyCaseAdapter(private val dataSet: MutableList<WeeklyCase>) :
-    RecyclerView.Adapter<WeeklyCaseAdapter.ViewHolder>() {
+/**
+ * Class for handling weekly cases.
+ */
+class WeeklyCasesAdapter(private val dataSet: MutableList<WeeklyCase>) :
+    RecyclerView.Adapter<WeeklyCasesAdapter.ViewHolder>() {
 
+    /**
+     * Updates all data set.
+     *
+     * @param dataSet the data you want to show in recycler view.
+     */
     fun updateDateSet(dataSet: List<WeeklyCase>) {
         this.dataSet.clear()
         this.dataSet.addAll(dataSet)
@@ -69,5 +77,8 @@ class WeeklyCaseAdapter(private val dataSet: MutableList<WeeklyCase>) :
 
     override fun getItemCount() = dataSet.size
 
+    /**
+     * Class for weekly case list adapter.
+     */
     class ViewHolder(val binding: WeeklyCaseItemBinding) : RecyclerView.ViewHolder(binding.root)
 }
