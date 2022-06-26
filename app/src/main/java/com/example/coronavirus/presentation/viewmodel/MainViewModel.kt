@@ -35,7 +35,7 @@ class MainViewModel : ViewModel() {
     private val searchDialog = MutableLiveData<SearchDialog>()
 
     /**
-     * Weekly case list
+     * Weekly case list.
      *
      * @return provides live data type for activity to observe.
      */
@@ -43,6 +43,11 @@ class MainViewModel : ViewModel() {
         return weeklyCaseList
     }
 
+    /**
+     * Search dialog.
+     *
+     * @return provides live data type for activity to observe.
+     */
     fun searchDialog(): LiveData<SearchDialog> {
         return searchDialog
     }
@@ -63,6 +68,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * When dialog on show.
+     */
     fun onShowDialog() {
         searchDialog.postValue(
             SearchDialog(
@@ -73,7 +81,7 @@ class MainViewModel : ViewModel() {
     }
 
     /**
-     *
+     * When user selected an area.
      */
     fun onAreaSelected(position: Int) {
         searchDialog.value = SearchDialog(selectedItem = position, isShowDialog = false)
@@ -144,6 +152,9 @@ data class DailyNum(
     val dailyCumCases: Int,
 )
 
+/**
+ * View model holds all view data for search dialog.
+ */
 data class SearchDialog(
     val selectedItem: Int = 0,
     val itemList: List<String> = MainViewModel.SearchArea.values().map { it.name },

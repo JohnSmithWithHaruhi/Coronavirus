@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Provides covid data from network.
  */
 class CovidNetworkDatasource {
-    companion object {
+    private companion object {
         private const val baseUrl = "https://api.coronavirus.data.gov.uk/v1/"
         private const val structure =
             """{"date":"date","name":"areaName","newCasesByPublishDate":"newCasesByPublishDate","cumCasesByPublishDate":"cumCasesByPublishDate","newDeaths28DaysByPublishDate":"newDeaths28DaysByPublishDate","cumDeaths28DaysByPublishDate":"cumDeaths28DaysByPublishDate"}"""
