@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.coronavirus.ExtensionUtil.formatNumber
 import com.example.coronavirus.R
 import com.example.coronavirus.databinding.ItemDailyCaseBinding
 import com.example.coronavirus.databinding.ItemWeeklyCaseBinding
@@ -38,8 +39,8 @@ class WeeklyCasesAdapter(private val weeklyCaseList: MutableList<WeeklyCase>) :
         with(viewHolder.binding) {
             val weeklyCase = weeklyCaseList[position]
             date.text = weeklyCase.date
-            weeklyCaseNumber.text = weeklyCase.weeklyCumCases.toString()
-            totalCaseNumber.text = "Total: ${weeklyCase.totalCumCases}"
+            weeklyCaseNumber.text = weeklyCase.weeklyCumCases.formatNumber()
+            totalCaseNumber.text = "Total: ${weeklyCase.totalCumCases.formatNumber()}"
 
             if (weeklyCase.expand) {
                 weeklyCaseNumber.visibility = View.INVISIBLE
@@ -50,7 +51,7 @@ class WeeklyCasesAdapter(private val weeklyCaseList: MutableList<WeeklyCase>) :
                     val binding =
                         ItemDailyCaseBinding.inflate(LayoutInflater.from(context))
                     binding.dayOfWeek.text = it.dayOfWeek
-                    binding.number.text = it.dailyCumCases.toString()
+                    binding.number.text = it.dailyCumCases.formatNumber()
                     dailyList.addView(binding.root)
                 }
                 expandIcon.setImageDrawable(
@@ -86,4 +87,6 @@ class WeeklyCasesAdapter(private val weeklyCaseList: MutableList<WeeklyCase>) :
      * Class for weekly case list adapter.
      */
     class ViewHolder(val binding: ItemWeeklyCaseBinding) : RecyclerView.ViewHolder(binding.root)
+
+
 }
