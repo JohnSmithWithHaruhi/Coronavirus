@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coronavirus.R
-import com.example.coronavirus.databinding.DailyCaseItemBinding
-import com.example.coronavirus.databinding.WeeklyCaseItemBinding
+import com.example.coronavirus.databinding.ItemDailyCaseBinding
+import com.example.coronavirus.databinding.ItemWeeklyCaseBinding
 import com.example.coronavirus.presentation.viewmodel.WeeklyCase
 
 /**
@@ -29,7 +29,7 @@ class WeeklyCasesAdapter(private val dataSet: MutableList<WeeklyCase>) :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            WeeklyCaseItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+            ItemWeeklyCaseBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         return ViewHolder(binding)
     }
 
@@ -45,7 +45,7 @@ class WeeklyCasesAdapter(private val dataSet: MutableList<WeeklyCase>) :
                 dailyList.removeAllViews()
                 data.dailyNewCase.forEach {
                     val binding =
-                        DailyCaseItemBinding.inflate(LayoutInflater.from(context))
+                        ItemDailyCaseBinding.inflate(LayoutInflater.from(context))
                     binding.number.text = it.toString()
                     dailyList.addView(binding.root)
                 }
@@ -67,7 +67,6 @@ class WeeklyCasesAdapter(private val dataSet: MutableList<WeeklyCase>) :
                 )
             }
 
-
             weeklyTitle.setOnClickListener {
                 data.expand = !data.expand
                 notifyItemChanged(position)
@@ -80,5 +79,5 @@ class WeeklyCasesAdapter(private val dataSet: MutableList<WeeklyCase>) :
     /**
      * Class for weekly case list adapter.
      */
-    class ViewHolder(val binding: WeeklyCaseItemBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ItemWeeklyCaseBinding) : RecyclerView.ViewHolder(binding.root)
 }
