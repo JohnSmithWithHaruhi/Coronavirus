@@ -11,11 +11,13 @@ import com.example.coronavirus.data.repository.CovidRepository
 import com.example.coronavirus.data.repository.CovidRepositoryImpl
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.TestOnly
+import java.time.DayOfWeek.SATURDAY
 import java.time.DayOfWeek.SUNDAY
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
+import java.time.temporal.TemporalAdjusters.next
 import java.time.temporal.TemporalAdjusters.previous
 import java.util.*
 
@@ -57,28 +59,32 @@ class MainViewModel : ViewModel() {
         val weeklyCaseList = mutableListOf<WeeklyCase>()
 
         var baseDay = LocalDate.parse(dailyCaseList.first().date).with(previous(SUNDAY))
-        var cumCases = 0
+        var weeklyCumCases = 0
+        var totalCumCases = 0
         var dailyList = mutableListOf<DailyNum>()
 
         dailyCaseList.forEach {
             if (LocalDate.parse(it.date).toEpochDay() < baseDay.toEpochDay()) {
                 weeklyCaseList.add(
                     WeeklyCase(
-                        date = baseDay.plusWeeks(1)
+                        date = baseDay.with(next(SATURDAY))
                             .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)),
-                        weeklyCumCases = cumCases,
-                        totalCumCases = it.cumCasesByPublishDate + cumCases,
+                        weeklyCumCases = weeklyCumCases,
+                        totalCumCases = totalCumCases,
                         dailyCaseList = dailyList,
                         expand = false
                     )
                 )
 
                 baseDay = baseDay.minusWeeks(1)
-                cumCases = 0
+                weeklyCumCases = 0
+                totalCumCases = 0
                 dailyList = mutableListOf()
             }
 
-            cumCases += it.newCasesByPublishDate
+            weeklyCumCases += it.newCasesByPublishDate
+            totalCumCases =
+                if (it.cumCasesByPublishDate > totalCumCases) it.cumCasesByPublishDate else totalCumCases
             val dayOfWeek = LocalDate.parse(it.date).dayOfWeek
             dailyList.add(
                 DailyNum(
