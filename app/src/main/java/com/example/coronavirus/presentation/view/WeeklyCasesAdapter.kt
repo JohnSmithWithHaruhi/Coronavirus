@@ -13,17 +13,17 @@ import com.example.coronavirus.presentation.viewmodel.WeeklyCase
 /**
  * Class for handling weekly cases.
  */
-class WeeklyCasesAdapter(private val dataSet: MutableList<WeeklyCase>) :
+class WeeklyCasesAdapter(private val weeklyCaseList: MutableList<WeeklyCase>) :
     RecyclerView.Adapter<WeeklyCasesAdapter.ViewHolder>() {
 
     /**
      * Updates all data set.
      *
-     * @param dataSet the data you want to show in recycler view.
+     * @param weeklyCaseList the data you want to show in recycler view.
      */
-    fun updateDateSet(dataSet: List<WeeklyCase>) {
-        this.dataSet.clear()
-        this.dataSet.addAll(dataSet)
+    fun updateDateSet(weeklyCaseList: List<WeeklyCase>) {
+        this.weeklyCaseList.clear()
+        this.weeklyCaseList.addAll(weeklyCaseList)
         notifyDataSetChanged()
     }
 
@@ -36,17 +36,21 @@ class WeeklyCasesAdapter(private val dataSet: MutableList<WeeklyCase>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val context = viewHolder.binding.root.context
         with(viewHolder.binding) {
-            val data = dataSet[position]
-            date.text = data.date.toString()
-            caseNumber.text = data.cumCases.toString()
+            val weeklyCase = weeklyCaseList[position]
+            date.text = weeklyCase.date
+            weeklyCaseNumber.text = weeklyCase.weeklyCumCases.toString()
+            totalCaseNumber.text = "Total: ${weeklyCase.totalCumCases}"
 
-            if (data.expand) {
+            if (weeklyCase.expand) {
+                weeklyCaseNumber.visibility = View.INVISIBLE
+                totalCaseNumber.visibility = View.VISIBLE
                 dailyList.visibility = View.VISIBLE
                 dailyList.removeAllViews()
-                data.dailyNewCase.forEach {
+                weeklyCase.dailyCaseList.forEach {
                     val binding =
                         ItemDailyCaseBinding.inflate(LayoutInflater.from(context))
-                    binding.number.text = it.toString()
+                    binding.dayOfWeek.text = it.dayOfWeek
+                    binding.number.text = it.dailyCumCases.toString()
                     dailyList.addView(binding.root)
                 }
                 expandIcon.setImageDrawable(
@@ -57,6 +61,8 @@ class WeeklyCasesAdapter(private val dataSet: MutableList<WeeklyCase>) :
                     )
                 )
             } else {
+                weeklyCaseNumber.visibility = View.VISIBLE
+                totalCaseNumber.visibility = View.INVISIBLE
                 dailyList.visibility = View.GONE
                 expandIcon.setImageDrawable(
                     ResourcesCompat.getDrawable(
@@ -68,13 +74,13 @@ class WeeklyCasesAdapter(private val dataSet: MutableList<WeeklyCase>) :
             }
 
             weeklyTitle.setOnClickListener {
-                data.expand = !data.expand
+                weeklyCase.expand = !weeklyCase.expand
                 notifyItemChanged(position)
             }
         }
     }
 
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = weeklyCaseList.size
 
     /**
      * Class for weekly case list adapter.

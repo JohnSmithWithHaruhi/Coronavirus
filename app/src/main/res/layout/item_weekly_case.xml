@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/weekly_title"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_item_height"
+        android:layout_height="@dimen/list_item_height_two_line"
         android:foreground="?android:attr/selectableItemBackground"
         android:paddingHorizontal="@dimen/list_item_padding_horizontal">
 
@@ -17,13 +17,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-            app:layout_constraintBottom_toTopOf="@id/caseNumber"
+            app:layout_constraintBottom_toTopOf="@id/weeklyCaseNumber"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@+id/caseNumber"
+            android:id="@+id/totalCaseNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+            android:textColor="?attr/colorPrimary"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date" />
+
+        <TextView
+            android:id="@+id/weeklyCaseNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"

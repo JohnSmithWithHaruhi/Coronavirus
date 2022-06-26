@@ -13,7 +13,11 @@ import kotlinx.coroutines.launch
 import org.jetbrains.annotations.TestOnly
 import java.time.DayOfWeek.SUNDAY
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.time.format.TextStyle
 import java.time.temporal.TemporalAdjusters.previous
+import java.util.*
 
 /**
  * Main activity's view model.
@@ -54,27 +58,34 @@ class MainViewModel : ViewModel() {
 
         var baseDay = LocalDate.parse(dailyCaseList.first().date).with(previous(SUNDAY))
         var cumCases = 0
-        var dailyNewCaseList = mutableListOf<Int>()
+        var dailyList = mutableListOf<DailyNum>()
 
         dailyCaseList.forEach {
             if (LocalDate.parse(it.date).toEpochDay() < baseDay.toEpochDay()) {
                 weeklyCaseList.add(
                     WeeklyCase(
-                        baseDay,
-                        cumCases,
-                        dailyNewCaseList,
-                        false
+                        date = baseDay.plusWeeks(1)
+                            .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)),
+                        weeklyCumCases = cumCases,
+                        totalCumCases = it.cumCasesByPublishDate + cumCases,
+                        dailyCaseList = dailyList,
+                        expand = false
                     )
                 )
 
                 baseDay = baseDay.minusWeeks(1)
                 cumCases = 0
-                dailyNewCaseList = mutableListOf()
+                dailyList = mutableListOf()
             }
 
-
             cumCases += it.newCasesByPublishDate
-            dailyNewCaseList.add(it.newCasesByPublishDate)
+            val dayOfWeek = LocalDate.parse(it.date).dayOfWeek
+            dailyList.add(
+                DailyNum(
+                    dayOfWeek = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
+                    dailyCumCases = it.newCasesByPublishDate,
+                )
+            )
         }
 
         return weeklyCaseList
@@ -82,11 +93,20 @@ class MainViewModel : ViewModel() {
 }
 
 /**
- * View model class to hold all view data.
+ * View model holds all view data for weekly case.
  */
 data class WeeklyCase(
-    val date: LocalDate,
-    val cumCases: Int,
-    val dailyNewCase: List<Int>,
+    val date: String,
+    val weeklyCumCases: Int,
+    val totalCumCases: Int,
+    val dailyCaseList: List<DailyNum>,
     var expand: Boolean
+)
+
+/**
+ * View model holds all view data for daily case.
+ */
+data class DailyNum(
+    val dayOfWeek: String,
+    val dailyCumCases: Int,
 )
