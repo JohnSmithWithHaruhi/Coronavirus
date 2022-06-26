@@ -7,6 +7,9 @@ import com.example.coronavirus.data.entity.DailyCase
  */
 interface CovidRepository {
 
+    /**
+     * Type of area to filter.
+     */
     enum class SearchArea {
         UnitedKingdom, England, NorthernIreland, Scotland, Wales
     }

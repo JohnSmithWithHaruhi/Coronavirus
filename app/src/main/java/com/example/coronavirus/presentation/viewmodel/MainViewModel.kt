@@ -149,7 +149,7 @@ data class WeeklyCase(
  */
 data class DailyNum(
     val dayOfWeek: String,
-    val dailyCumCases: Int,
+    val dailyCumCases: Int
 )
 
 /**
