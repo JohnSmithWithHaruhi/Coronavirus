@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/day_of_week"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/list_item_height_one_line"
         android:gravity="center_vertical"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         android:textColor="?attr/colorSecondary"
@@ -19,8 +19,8 @@
     <TextView
         android:id="@+id/number"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="72dp"
+        android:layout_height="@dimen/list_item_height_one_line"
+        android:layout_marginStart="@dimen/list_item_margin_start"
         android:gravity="center_vertical"
         android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
         app:layout_constraintBottom_toBottomOf="parent"
