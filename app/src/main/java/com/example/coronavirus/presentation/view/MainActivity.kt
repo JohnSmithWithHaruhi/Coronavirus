@@ -1,6 +1,7 @@
 package com.example.coronavirus.presentation.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,8 +36,17 @@ class MainActivity : AppCompatActivity() {
             viewModel.onShowDialog()
         }
 
+        binding.reloadButton.setOnClickListener {
+            viewModel.fetchWeeklyCaseList()
+        }
+
         viewModel.weeklyCaseList().observe(this) {
-            adapter.updateDateSet(it)
+            if (it.isEmpty()) {
+                showReloadView()
+            } else {
+                hideReloadView()
+                adapter.updateDateSet(it)
+            }
         }
 
         viewModel.searchDialog().observe(this) {
@@ -59,5 +69,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.fetchWeeklyCaseList()
+    }
+
+    private fun showReloadView(){
+        binding.reloadView.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.INVISIBLE
+    }
+
+    private fun hideReloadView(){
+        binding.reloadView.visibility = View.INVISIBLE
+        binding.recyclerView.visibility = View.VISIBLE
     }
 }

@@ -4,6 +4,7 @@ import com.example.coronavirus.data.datasource.CovidNetworkDatasource
 import com.example.coronavirus.data.entity.DailyCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 /**
  * Class implemented [CovidRepository].
@@ -18,7 +19,12 @@ class CovidRepositoryImpl : CovidRepository {
                 CovidRepository.SearchArea.NorthernIreland -> "nation;areaName=Northern Ireland"
                 else -> "nation;areaName=${area.name}"
             }
-            val response = covidNetworkDatasource.getCases(areaType).execute()
+
+            val response = try {
+                covidNetworkDatasource.getCases(areaType).execute()
+            } catch (e: IOException) {
+                return@withContext emptyList()
+            }
             if (response.isSuccessful) {
                 response.body()?.let { return@withContext it.dailyCase }
             }
