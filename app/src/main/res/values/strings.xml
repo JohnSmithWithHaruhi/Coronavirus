@@ -5,6 +5,8 @@
     <string name="dialog_search_positive">accept</string>
     <string name="dialog_search_negative">decline</string>
 
+    <string name="item_weekly_total_case">Total: %s</string>
+
     <string name="reload_message">Whoops, looks like something went wrong!\nPlease check your network, and reload again.</string>
     <string name="reload_button">Reload</string>
 </resources>

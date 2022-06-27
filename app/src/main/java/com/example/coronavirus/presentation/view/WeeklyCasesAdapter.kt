@@ -40,7 +40,10 @@ class WeeklyCasesAdapter(private val weeklyCaseList: MutableList<WeeklyCase>) :
             val weeklyCase = weeklyCaseList[position]
             date.text = weeklyCase.date
             weeklyCaseNumber.text = weeklyCase.weeklyCumCases.formatNumber()
-            totalCaseNumber.text = "Total: ${weeklyCase.totalCumCases.formatNumber()}"
+            totalCaseNumber.text = context.getString(
+                R.string.item_weekly_total_case,
+                weeklyCase.totalCumCases.formatNumber()
+            )
 
             if (weeklyCase.isExpand) {
                 weeklyCaseNumber.visibility = View.INVISIBLE
