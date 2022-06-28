@@ -2,7 +2,6 @@ package com.example.coronavirus.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.coronavirus.data.entity.DailyCase
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
