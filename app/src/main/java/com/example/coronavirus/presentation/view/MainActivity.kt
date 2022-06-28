@@ -71,12 +71,12 @@ class MainActivity : AppCompatActivity() {
         viewModel.fetchWeeklyCaseList()
     }
 
-    private fun showReloadView(){
+    private fun showReloadView() {
         binding.reloadView.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.INVISIBLE
     }
 
-    private fun hideReloadView(){
+    private fun hideReloadView() {
         binding.reloadView.visibility = View.INVISIBLE
         binding.recyclerView.visibility = View.VISIBLE
     }
