@@ -1,7 +1,5 @@
 package com.example.coronavirus.presentation.viewmodel
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -54,12 +52,10 @@ class MainViewModel : ViewModel() {
     fun fetchWeeklyCaseList() {
         val selectedItem = searchDialog.value?.selectedItem ?: 0
         viewModelScope.launch {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val area = CovidRepository.SearchArea.values()[selectedItem]
-                val dailyCaseList = covidRepository.fetchDailyCaseList(area)
-                convertDailyCaseToWeeklyCase(dailyCaseList).let {
-                    weeklyCaseList.postValue(it)
-                }
+            val area = CovidRepository.SearchArea.values()[selectedItem]
+            val dailyCaseList = covidRepository.fetchDailyCaseList(area)
+            convertDailyCaseToWeeklyCase(dailyCaseList).let {
+                weeklyCaseList.postValue(it)
             }
         }
     }
@@ -84,7 +80,6 @@ class MainViewModel : ViewModel() {
         fetchWeeklyCaseList()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @VisibleForTesting
     fun convertDailyCaseToWeeklyCase(dailyCaseList: List<DailyCase>): List<WeeklyCase> {
         if (dailyCaseList.isEmpty()) {
