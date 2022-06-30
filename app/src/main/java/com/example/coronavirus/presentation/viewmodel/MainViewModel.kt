@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coronavirus.data.entity.DailyCase
 import com.example.coronavirus.data.repository.CovidRepository
-import com.example.coronavirus.data.repository.CovidRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek.SATURDAY
 import java.time.DayOfWeek.SUNDAY
@@ -18,13 +18,16 @@ import java.time.format.TextStyle
 import java.time.temporal.TemporalAdjusters.next
 import java.time.temporal.TemporalAdjusters.previous
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Main activity's view model.
  */
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val covidRepository: CovidRepository
+) : ViewModel() {
 
-    private val covidRepository: CovidRepository = CovidRepositoryImpl()
     private val weeklyCaseList = MutableLiveData<List<WeeklyCase>>()
     private val searchDialog = MutableLiveData<SearchDialog>()
 

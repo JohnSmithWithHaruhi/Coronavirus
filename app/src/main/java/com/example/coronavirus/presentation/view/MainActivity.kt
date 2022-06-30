@@ -9,10 +9,12 @@ import com.example.coronavirus.R
 import com.example.coronavirus.databinding.ActivityMainBinding
 import com.example.coronavirus.presentation.viewmodel.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Main screen for this application.
  */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

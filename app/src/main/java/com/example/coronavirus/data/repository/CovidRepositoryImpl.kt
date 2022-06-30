@@ -5,11 +5,12 @@ import com.example.coronavirus.data.entity.DailyCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import javax.inject.Inject
 
 /**
  * Class implemented [CovidRepository].
  */
-class CovidRepositoryImpl : CovidRepository {
+class CovidRepositoryImpl @Inject constructor() : CovidRepository {
     private val covidNetworkDatasource = CovidNetworkDatasource()
 
     override suspend fun fetchDailyCaseList(area: CovidRepository.SearchArea): List<DailyCase> {
