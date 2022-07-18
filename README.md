@@ -13,6 +13,8 @@
 - Data
   - Repository
   - DataSource
+- DI
+  - module
 
 ## Library
   - ViewBinding
@@ -20,6 +22,7 @@
   - Coroutine
   - Retrofit, Gson
   - Junit
+  - Hilt
 
 ## Screen Shots
 
