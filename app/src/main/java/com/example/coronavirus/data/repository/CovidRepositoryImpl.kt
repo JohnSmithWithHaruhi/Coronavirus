@@ -10,8 +10,9 @@ import javax.inject.Inject
 /**
  * Class implemented [CovidRepository].
  */
-class CovidRepositoryImpl @Inject constructor() : CovidRepository {
-    private val covidNetworkDatasource = CovidNetworkDatasource()
+class CovidRepositoryImpl @Inject constructor(
+    private val covidNetworkDatasource: CovidNetworkDatasource
+) : CovidRepository {
 
     override suspend fun fetchDailyCaseList(area: CovidRepository.SearchArea): List<DailyCase> {
         return withContext(Dispatchers.IO) {
