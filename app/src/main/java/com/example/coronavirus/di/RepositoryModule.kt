@@ -12,7 +12,6 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 
@@ -38,13 +37,13 @@ object NetworkDatasourceModule {
 
     @Provides
     @Singleton
-    fun provideCovidService(retrofit: Retrofit): CovidService{
+    fun provideCovidService(retrofit: Retrofit): CovidService {
         return retrofit.create(CovidService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit{
+    fun provideRetrofit(): Retrofit {
         val baseUrl = "https://api.coronavirus.data.gov.uk/v1/"
 
         return Retrofit.Builder()
