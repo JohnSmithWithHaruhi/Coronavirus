@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coronavirus.R
 import com.example.coronavirus.databinding.ActivityMainBinding
-import com.example.coronavirus.presentation.ui.WeeklyCaseItem
+import com.example.coronavirus.presentation.ui.WeeklyCaseList
 import com.example.coronavirus.presentation.viewmodel.MainViewModel
 import com.example.coronavirus.presentation.viewmodel.WeeklyCase
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -105,20 +105,5 @@ class MainActivity : AppCompatActivity() {
     private fun hideReloadView() {
         binding.reloadView.visibility = View.INVISIBLE
         binding.recyclerView.visibility = View.VISIBLE
-    }
-
-    @Composable
-    fun WeeklyCaseList(weeklyCases: List<WeeklyCase>) {
-        LazyColumn {
-            weeklyCases.map {
-                item {
-                    WeeklyCaseItem(
-                        date = it.date,
-                        totalCase = it.totalCumCases.toString(),
-                        weeklyCase = it.weeklyCumCases.toString(),
-                    )
-                }
-            }
-        }
     }
 }

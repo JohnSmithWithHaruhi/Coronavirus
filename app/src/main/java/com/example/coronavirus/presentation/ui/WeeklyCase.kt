@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.example.coronavirus.R
 
 @Composable
-fun WeeklyCaseItem(
+fun WeeklyCase(
     date: String, totalCase: String, weeklyCase: String
 ) {
     var isExpand by remember { mutableStateOf(false) }
@@ -62,7 +62,7 @@ fun WeeklyCaseItem(
 @Preview
 @Composable
 fun WeeklyCasePreview() {
-    WeeklyCaseItem(
+    WeeklyCase(
         date = "Apr 1, 2022", weeklyCase = "1,227,288", totalCase = "Total: 13,117,469"
     )
 }
