@@ -23,7 +23,30 @@ fun WeeklyCaseList(weeklyCases: List<WeeklyCase>) {
 @Preview
 @Composable
 fun WeeklyCaseListPreview() {
-    WeeklyCase(
-        date = "Apr 1, 2022", weeklyCase = "1,227,288", totalCase = "Total: 13,117,469"
+    val weeklyCases = listOf(
+        WeeklyCase(
+            date = "May 7, 2022",
+            weeklyCumCases = 75809,
+            totalCumCases = 22181289,
+            dailyCaseList = listOf(),
+            isExpand = false
+        ),
+        WeeklyCase(
+            date = "May 7, 2022",
+            weeklyCumCases = 75809,
+            totalCumCases = 22181289,
+            dailyCaseList = listOf(),
+            isExpand = false
+        ),
+        WeeklyCase(
+            date = "May 7, 2022",
+            weeklyCumCases = 75809,
+            totalCumCases = 22181289,
+            dailyCaseList = listOf(),
+            isExpand = false
+        )
+    )
+    WeeklyCaseList(
+        weeklyCases = weeklyCases
     )
 }
