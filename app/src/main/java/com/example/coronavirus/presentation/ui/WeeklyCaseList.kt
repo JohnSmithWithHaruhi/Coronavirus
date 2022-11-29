@@ -14,6 +14,7 @@ fun WeeklyCaseList(weeklyCases: List<WeeklyCase>) {
                     date = it.date,
                     totalCase = it.totalCumCases.toString(),
                     weeklyCase = it.weeklyCumCases.toString(),
+                    dailyCaseList = it.dailyCaseList
                 )
             }
         }
