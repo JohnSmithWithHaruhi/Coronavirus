@@ -1,6 +1,6 @@
 package com.example.coronavirus.data.datasource
 
-import com.example.coronavirus.data.entity.Cases
+import com.example.coronavirus.data.entity.DailyCaseList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -10,8 +10,8 @@ import retrofit2.http.Query
  */
 interface CovidService {
     @GET("data")
-    fun getCases(
+    fun getDailyCaseList(
         @Query("filters") filters: String,
         @Query("structure") structure: String
-    ): Call<Cases>
+    ): Call<DailyCaseList>
 }

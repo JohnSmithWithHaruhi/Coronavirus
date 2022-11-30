@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Data class depends on API response.
  */
-data class Cases(
+data class DailyCaseList(
     @SerializedName("data")
     val dailyCase: List<DailyCase>
 )

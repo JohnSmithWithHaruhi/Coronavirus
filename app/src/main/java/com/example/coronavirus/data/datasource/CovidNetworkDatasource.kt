@@ -1,6 +1,6 @@
 package com.example.coronavirus.data.datasource
 
-import com.example.coronavirus.data.entity.Cases
+import com.example.coronavirus.data.entity.DailyCaseList
 import retrofit2.Call
 import javax.inject.Inject
 
@@ -20,8 +20,8 @@ class CovidNetworkDatasource @Inject constructor(
      *
      * @param areaType the type of area which you want to search.
      */
-    fun getCases(areaType: String): Call<Cases> {
-        return service.getCases("areaType=${areaType}", structure)
+    fun getCases(areaType: String): Call<DailyCaseList> {
+        return service.getDailyCaseList("areaType=${areaType}", structure)
     }
 
 }
