@@ -15,10 +15,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coronavirus.R
+import com.example.coronavirus.data.model.WeeklyCase
 import com.example.coronavirus.databinding.ActivityMainBinding
 import com.example.coronavirus.presentation.ui.WeeklyCaseList
 import com.example.coronavirus.presentation.viewmodel.MainViewModel
-import com.example.coronavirus.presentation.viewmodel.WeeklyCase
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 

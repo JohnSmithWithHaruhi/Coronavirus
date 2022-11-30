@@ -7,9 +7,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coronavirus.ExtensionUtil.formatNumber
 import com.example.coronavirus.R
+import com.example.coronavirus.data.model.WeeklyCase
 import com.example.coronavirus.databinding.ItemDailyCaseBinding
 import com.example.coronavirus.databinding.ItemWeeklyCaseBinding
-import com.example.coronavirus.presentation.viewmodel.WeeklyCase
 
 /**
  * Class for handling weekly cases.

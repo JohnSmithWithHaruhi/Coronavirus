@@ -12,7 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coronavirus.R
-import com.example.coronavirus.presentation.viewmodel.DailyNum
+import com.example.coronavirus.data.model.DailyNum
 
 @Composable
 fun WeeklyCase(

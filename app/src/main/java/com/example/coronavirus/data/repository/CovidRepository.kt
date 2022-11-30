@@ -1,6 +1,6 @@
 package com.example.coronavirus.data.repository
 
-import com.example.coronavirus.data.entity.DailyCase
+import com.example.coronavirus.data.model.WeeklyCase
 
 /**
  * Repository provides data about covid.
@@ -15,9 +15,9 @@ interface CovidRepository {
     }
 
     /**
-     * Fetches daily case list.
+     * Fetches weekly case list.
      *
-     * @return daily case list.
+     * @return weekly case list.
      */
-    suspend fun fetchDailyCaseList(area: SearchArea): List<DailyCase>
+    suspend fun fetchWeeklyCaseList(area: SearchArea): List<WeeklyCase>
 }

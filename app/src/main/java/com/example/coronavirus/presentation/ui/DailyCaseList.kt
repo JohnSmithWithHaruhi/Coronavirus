@@ -3,7 +3,7 @@ package com.example.coronavirus.presentation.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.coronavirus.presentation.viewmodel.DailyNum
+import com.example.coronavirus.data.model.DailyNum
 
 @Composable
 fun DailyCaseList(dailyCases: List<DailyNum>) {
