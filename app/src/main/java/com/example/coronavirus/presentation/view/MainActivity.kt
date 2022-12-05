@@ -6,20 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.coronavirus.R
-import com.example.coronavirus.data.model.WeeklyCase
 import com.example.coronavirus.databinding.ActivityMainBinding
 import com.example.coronavirus.presentation.ui.WeeklyCaseList
+import com.example.coronavirus.presentation.viewmodel.MainUiState
 import com.example.coronavirus.presentation.viewmodel.MainViewModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -38,14 +32,19 @@ class MainActivity : AppCompatActivity() {
         val viewModel: MainViewModel by viewModels()
 
         setContent {
-            val weeklyCaseList: List<WeeklyCase>? by viewModel.weeklyCaseList().observeAsState()
+            val mainUiState = viewModel.mainUiState.collectAsState().value
+            val weeklyCaseList = when (mainUiState) {
+                MainUiState.Error -> listOf()
+                MainUiState.Loading -> listOf()
+                is MainUiState.Success -> {
+                    mainUiState.weeklyCaseList
+                }
+            }
 
             Scaffold(modifier = Modifier.fillMaxWidth()) {
-                WeeklyCaseList(weeklyCases = weeklyCaseList ?: listOf())
+                WeeklyCaseList(weeklyCases = weeklyCaseList)
             }
         }
-
-        viewModel.fetchWeeklyCaseList()
 
         /*val viewModel: MainViewModel by viewModels()
         binding = ActivityMainBinding.inflate(layoutInflater)

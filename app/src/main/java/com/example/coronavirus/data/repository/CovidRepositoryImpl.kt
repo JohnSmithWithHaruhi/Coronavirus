@@ -38,7 +38,8 @@ class CovidRepositoryImpl @Inject constructor(
                 return@withContext emptyList()
             }
             if (response.isSuccessful) {
-                response.body()?.let { convertDailyCaseToWeeklyCase(it.dailyCase) }
+                response.body()
+                    ?.let { return@withContext convertDailyCaseToWeeklyCase(it.dailyCase) }
             }
             emptyList()
         }
