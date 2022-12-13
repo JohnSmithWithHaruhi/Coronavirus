@@ -1,7 +1,7 @@
 package com.example.coronavirus.data.model
 
 /**
- * View model holds all view data for weekly case.
+ * Model holds all data for weekly case.
  */
 data class WeeklyCase(
     val date: String,
@@ -12,7 +12,7 @@ data class WeeklyCase(
 )
 
 /**
- * View model holds all view data for daily case.
+ * Model holds data for daily case.
  */
 data class DailyNum(
     val dayOfWeek: String,
