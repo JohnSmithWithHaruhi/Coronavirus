@@ -25,8 +25,20 @@ class MainViewModel @Inject constructor(private val covidRepository: CovidReposi
     val mainUiState: StateFlow<MainUiState> = _mainUiState
 
     init {
-        val selectedItem = searchDialog.value?.selectedItem ?: 0
+        loadWeeklyCaseList()
+    }
+
+    /**
+     * Reload weekly case list.
+     */
+    fun reload(){
+        loadWeeklyCaseList()
+    }
+
+    private fun loadWeeklyCaseList(){
+        _mainUiState.value = MainUiState.Loading
         viewModelScope.launch {
+            val selectedItem = searchDialog.value?.selectedItem ?: 0
             val area = CovidRepository.SearchArea.values()[selectedItem]
             val weekList = covidRepository.fetchWeeklyCaseList(area)
             if (weekList.isEmpty()) {
