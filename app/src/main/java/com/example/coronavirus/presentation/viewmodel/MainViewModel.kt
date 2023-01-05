@@ -22,10 +22,10 @@ class MainViewModel @Inject constructor(private val covidRepository: CovidReposi
     ViewModel() {
 
     private val _mainUiState = MutableStateFlow<MainUiState>(MainUiState.Loading)
-    private val _searchDialogUiState = MutableStateFlow(SearchDialogUiState())
+    private val _searchAreaDialogUiState = MutableStateFlow(SearchAreaDialogUiState())
 
     val mainUiState: StateFlow<MainUiState> = _mainUiState
-    val searchDialogUiState: StateFlow<SearchDialogUiState> = _searchDialogUiState
+    val searchAreaDialogUiState: StateFlow<SearchAreaDialogUiState> = _searchAreaDialogUiState
 
     init {
         loadWeeklyCaseList()
@@ -47,7 +47,7 @@ class MainViewModel @Inject constructor(private val covidRepository: CovidReposi
 
     private fun loadWeeklyCaseList() {
         _mainUiState.value = MainUiState.Loading
-        val selectedItem = _searchDialogUiState.value.selectedItem
+        val selectedItem = _searchAreaDialogUiState.value.selectedItem
         val area = CovidRepository.SearchArea.values()[selectedItem]
         viewModelScope.launch {
             val weekList = covidRepository.fetchWeeklyCaseList(area)
@@ -64,7 +64,7 @@ class MainViewModel @Inject constructor(private val covidRepository: CovidReposi
  * View model holds all view data for search dialog.
  */
 @Stable
-class SearchDialogUiState {
+class SearchAreaDialogUiState {
     val itemList: List<String> = CovidRepository.SearchArea.values().map {
         when (it) {
             CovidRepository.SearchArea.UnitedKingdom -> "United Kingdom"

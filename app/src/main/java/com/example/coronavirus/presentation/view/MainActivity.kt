@@ -22,7 +22,7 @@ import com.example.coronavirus.R
 import com.example.coronavirus.presentation.ui.WeeklyCaseList
 import com.example.coronavirus.presentation.viewmodel.MainUiState
 import com.example.coronavirus.presentation.viewmodel.MainViewModel
-import com.example.coronavirus.presentation.viewmodel.SearchDialogUiState
+import com.example.coronavirus.presentation.viewmodel.SearchAreaDialogUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             MainScreen(
                 mainUiState = viewModel.mainUiState.collectAsState().value,
-                searchDialogUiState = viewModel.searchDialogUiState.collectAsState().value,
+                searchAreaDialogUiState = viewModel.searchAreaDialogUiState.collectAsState().value,
                 onReload = viewModel::reload,
                 onSelectSearchArea = viewModel::selectSearchArea,
             )
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     fun MainScreen(
         mainUiState: MainUiState,
-        searchDialogUiState: SearchDialogUiState,
+        searchAreaDialogUiState: SearchAreaDialogUiState,
         onReload: () -> Unit,
         onSelectSearchArea: () -> Unit
     ) {
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             floatingActionButtonPosition = FabPosition.End,
             floatingActionButton = {
                 if (mainUiState is MainUiState.Success) {
-                    FloatingActionButton({ searchDialogUiState.setShowDialog(true) }) {
+                    FloatingActionButton({ searchAreaDialogUiState.setShowDialog(true) }) {
                         Icon(Icons.Default.Search, contentDescription = "")
                     }
                 }
@@ -68,10 +68,10 @@ class MainActivity : AppCompatActivity() {
                 MainUiState.Loading -> LoadingScreen()
                 is MainUiState.Success -> {
                     WeeklyCaseList(weeklyCases = mainUiState.weeklyCaseList)
-                    if (searchDialogUiState.shouldShowDialog) {
-                        SearchDialog(
-                            searchDialogUiState = searchDialogUiState,
-                            onSelect = onSelectSearchArea
+                    if (searchAreaDialogUiState.shouldShowDialog) {
+                        SearchAreaDialog(
+                            searchAreaDialogUiState = searchAreaDialogUiState,
+                            onSelectArea = onSelectSearchArea
                         )
                     }
                 }
@@ -80,17 +80,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun SearchDialog(
-        searchDialogUiState: SearchDialogUiState,
-        onSelect: () -> Unit,
+    fun SearchAreaDialog(
+        searchAreaDialogUiState: SearchAreaDialogUiState,
+        onSelectArea: () -> Unit,
     ) {
-        var selectedItem by remember { mutableStateOf(searchDialogUiState.selectedItem) }
+        var selectedItem by remember { mutableStateOf(searchAreaDialogUiState.selectedItem) }
 
-        AlertDialog(onDismissRequest = { searchDialogUiState.setShowDialog(false) },
+        AlertDialog(onDismissRequest = { searchAreaDialogUiState.setShowDialog(false) },
             title = { Text(text = stringResource(R.string.dialog_search_title)) },
             text = {
                 Column(Modifier.selectableGroup()) {
-                    searchDialogUiState.itemList.mapIndexed { index, itemText ->
+                    searchAreaDialogUiState.itemList.mapIndexed { index, itemText ->
                         Row(
                             Modifier
                                 .fillMaxWidth()
@@ -113,9 +113,9 @@ class MainActivity : AppCompatActivity() {
             confirmButton = {
                 TextButton(
                     onClick = {
-                        searchDialogUiState.setSelectedItem(selectedItem)
-                        searchDialogUiState.setShowDialog(false)
-                        onSelect()
+                        searchAreaDialogUiState.setSelectedItem(selectedItem)
+                        searchAreaDialogUiState.setShowDialog(false)
+                        onSelectArea()
                     },
                 ) {
                     Text(text = stringResource(id = R.string.dialog_search_positive))
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             },
             dismissButton = {
                 TextButton(
-                    onClick = { searchDialogUiState.setShowDialog(false) },
+                    onClick = { searchAreaDialogUiState.setShowDialog(false) },
                 ) {
                     Text(text = stringResource(id = R.string.dialog_search_negative))
                 }
