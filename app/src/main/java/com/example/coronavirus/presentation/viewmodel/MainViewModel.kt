@@ -1,7 +1,6 @@
 package com.example.coronavirus.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coronavirus.data.model.WeeklyCase
@@ -19,10 +18,11 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val covidRepository: CovidRepository) :
     ViewModel() {
 
-    private val searchDialog = MutableLiveData<SearchDialog>()
     private val _mainUiState = MutableStateFlow<MainUiState>(MainUiState.Loading)
+    private val _searchDialogUiState = MutableStateFlow(SearchDialogUiState())
 
     val mainUiState: StateFlow<MainUiState> = _mainUiState
+    val searchDialogUiState: StateFlow<SearchDialogUiState> = _searchDialogUiState
 
     init {
         loadWeeklyCaseList()
@@ -31,14 +31,14 @@ class MainViewModel @Inject constructor(private val covidRepository: CovidReposi
     /**
      * Reload weekly case list.
      */
-    fun reload(){
+    fun reload() {
         loadWeeklyCaseList()
     }
 
-    private fun loadWeeklyCaseList(){
+    private fun loadWeeklyCaseList() {
         _mainUiState.value = MainUiState.Loading
         viewModelScope.launch {
-            val selectedItem = searchDialog.value?.selectedItem ?: 0
+            val selectedItem = _searchDialogUiState.value.selectedItem
             val area = CovidRepository.SearchArea.values()[selectedItem]
             val weekList = covidRepository.fetchWeeklyCaseList(area)
             if (weekList.isEmpty()) {
@@ -48,52 +48,34 @@ class MainViewModel @Inject constructor(private val covidRepository: CovidReposi
             }
         }
     }
-
-    /**
-     * Search dialog.
-     *
-     * @return provides live data type for activity to observe.
-     */
-    fun searchDialog(): LiveData<SearchDialog> {
-        return searchDialog
-    }
-
-    /**
-     * When dialog on show.
-     */
-    fun onShowDialog() {
-        searchDialog.postValue(
-            SearchDialog(
-                selectedItem = searchDialog.value?.selectedItem ?: 0,
-                isShowDialog = true
-            )
-        )
-    }
-
-    /**
-     * When user selected an area.
-     */
-    fun onAreaSelected(position: Int) {
-        searchDialog.value = SearchDialog(selectedItem = position, isShowDialog = false)
-        // fetchWeeklyCaseList()
-    }
 }
 
 /**
  * View model holds all view data for search dialog.
  */
-data class SearchDialog(
-    val selectedItem: Int = 0,
-    val itemList: List<String> =
-        CovidRepository.SearchArea.values().map {
-            when (it) {
-                CovidRepository.SearchArea.UnitedKingdom -> "United Kingdom"
-                CovidRepository.SearchArea.NorthernIreland -> "Northern Ireland"
-                else -> it.name
-            }
-        },
-    val isShowDialog: Boolean = false
-)
+@Stable
+class SearchDialogUiState {
+    val itemList: List<String> = CovidRepository.SearchArea.values().map {
+        when (it) {
+            CovidRepository.SearchArea.UnitedKingdom -> "United Kingdom"
+            CovidRepository.SearchArea.NorthernIreland -> "Northern Ireland"
+            else -> it.name
+        }
+    }
+
+    var selectedItem:Int = 0
+        private set
+    var shouldShowDialog by mutableStateOf(false)
+        private set
+
+    fun changeSelectedItem(index: Int) {
+        selectedItem = index
+    }
+
+    fun setShowDialog(shouldShow: Boolean) {
+        shouldShowDialog = shouldShow
+    }
+}
 
 sealed interface MainUiState {
     data class Success(val weeklyCaseList: List<WeeklyCase>) : MainUiState
