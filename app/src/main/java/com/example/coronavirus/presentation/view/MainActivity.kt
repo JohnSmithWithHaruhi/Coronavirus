@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 mainUiState = viewModel.mainUiState.collectAsState().value,
                 searchDialogUiState = viewModel.searchDialogUiState.collectAsState().value,
                 onReload = viewModel::reload,
-                onSearchSelected = viewModel::reload,
+                onSelectSearchArea = viewModel::selectSearchArea,
             )
         }
     }
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         mainUiState: MainUiState,
         searchDialogUiState: SearchDialogUiState,
         onReload: () -> Unit,
-        onSearchSelected: () -> Unit
+        onSelectSearchArea: () -> Unit
     ) {
         Scaffold(modifier = Modifier.fillMaxSize(),
             floatingActionButtonPosition = FabPosition.End,
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                     if (searchDialogUiState.shouldShowDialog) {
                         SearchDialog(
                             searchDialogUiState = searchDialogUiState,
-                            onSelected = onSearchSelected
+                            onSelect = onSelectSearchArea
                         )
                     }
                 }
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     @Composable
     fun SearchDialog(
         searchDialogUiState: SearchDialogUiState,
-        onSelected: () -> Unit,
+        onSelect: () -> Unit,
     ) {
         var selectedItem by remember { mutableStateOf(searchDialogUiState.selectedItem) }
 
@@ -113,9 +113,9 @@ class MainActivity : AppCompatActivity() {
             confirmButton = {
                 TextButton(
                     onClick = {
-                        searchDialogUiState.changeSelectedItem(selectedItem)
+                        searchDialogUiState.setSelectedItem(selectedItem)
                         searchDialogUiState.setShowDialog(false)
-                        onSelected()
+                        onSelect()
                     },
                 ) {
                     Text(text = stringResource(id = R.string.dialog_search_positive))

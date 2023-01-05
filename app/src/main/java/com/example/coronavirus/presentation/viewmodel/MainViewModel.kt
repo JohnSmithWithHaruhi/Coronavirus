@@ -1,6 +1,9 @@
 package com.example.coronavirus.presentation.viewmodel
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coronavirus.data.model.WeeklyCase
@@ -35,11 +38,18 @@ class MainViewModel @Inject constructor(private val covidRepository: CovidReposi
         loadWeeklyCaseList()
     }
 
+    /**
+     * Select search area and reload weekly case list.
+     */
+    fun selectSearchArea() {
+        loadWeeklyCaseList()
+    }
+
     private fun loadWeeklyCaseList() {
         _mainUiState.value = MainUiState.Loading
+        val selectedItem = _searchDialogUiState.value.selectedItem
+        val area = CovidRepository.SearchArea.values()[selectedItem]
         viewModelScope.launch {
-            val selectedItem = _searchDialogUiState.value.selectedItem
-            val area = CovidRepository.SearchArea.values()[selectedItem]
             val weekList = covidRepository.fetchWeeklyCaseList(area)
             if (weekList.isEmpty()) {
                 _mainUiState.value = MainUiState.Error
@@ -63,12 +73,12 @@ class SearchDialogUiState {
         }
     }
 
-    var selectedItem:Int = 0
+    var selectedItem: Int = 0
         private set
     var shouldShowDialog by mutableStateOf(false)
         private set
 
-    fun changeSelectedItem(index: Int) {
+    fun setSelectedItem(index: Int) {
         selectedItem = index
     }
 
