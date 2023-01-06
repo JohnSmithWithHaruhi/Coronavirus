@@ -18,6 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.coronavirus.R
 import com.example.coronavirus.ui.ui.WeeklyCaseList
 import com.example.coronavirus.ui.viewmodel.MainUiState
@@ -29,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * Main screen for this application.
  */
 @AndroidEntryPoint
+@OptIn(ExperimentalLifecycleComposeApi::class)
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +40,8 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             MainScreen(
-                mainUiState = viewModel.mainUiState.collectAsState().value,
-                searchAreaDialogUiState = viewModel.searchAreaDialogUiState.collectAsState().value,
+                mainUiState = viewModel.mainUiState.collectAsStateWithLifecycle().value,
+                searchAreaDialogUiState = viewModel.searchAreaDialogUiState.collectAsStateWithLifecycle().value,
                 onReload = viewModel::reload,
                 onSelectSearchArea = viewModel::selectSearchArea,
             )
