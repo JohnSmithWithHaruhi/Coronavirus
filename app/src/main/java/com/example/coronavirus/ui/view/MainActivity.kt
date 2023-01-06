@@ -1,4 +1,4 @@
-package com.example.coronavirus.presentation.view
+package com.example.coronavirus.ui.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -19,10 +19,10 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coronavirus.R
-import com.example.coronavirus.presentation.ui.WeeklyCaseList
-import com.example.coronavirus.presentation.viewmodel.MainUiState
-import com.example.coronavirus.presentation.viewmodel.MainViewModel
-import com.example.coronavirus.presentation.viewmodel.SearchAreaDialogUiState
+import com.example.coronavirus.ui.ui.WeeklyCaseList
+import com.example.coronavirus.ui.viewmodel.MainUiState
+import com.example.coronavirus.ui.viewmodel.MainViewModel
+import com.example.coronavirus.ui.viewmodel.SearchAreaDialogUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

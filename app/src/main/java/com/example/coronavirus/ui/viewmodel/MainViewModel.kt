@@ -1,4 +1,4 @@
-package com.example.coronavirus.presentation.viewmodel
+package com.example.coronavirus.ui.viewmodel
 
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
