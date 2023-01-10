@@ -1,4 +1,4 @@
-package com.example.coronavirus.ui.ui
+package com.example.coronavirus.ui.view
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

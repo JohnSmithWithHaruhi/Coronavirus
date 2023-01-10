@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.coronavirus.R
-import com.example.coronavirus.ui.ui.WeeklyCaseList
 import com.example.coronavirus.ui.viewmodel.MainUiState
 import com.example.coronavirus.ui.viewmodel.MainViewModel
 import com.example.coronavirus.ui.viewmodel.SearchAreaDialogUiState

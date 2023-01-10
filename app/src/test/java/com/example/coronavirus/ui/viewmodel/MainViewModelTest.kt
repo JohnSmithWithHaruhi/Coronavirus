@@ -1,4 +1,4 @@
-package com.example.coronavirus.presentation.viewmodel
+package com.example.coronavirus.ui.viewmodel
 
 import com.example.coronavirus.data.entity.DailyCase
 import org.junit.Assert
