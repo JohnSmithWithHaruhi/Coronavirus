@@ -12,10 +12,12 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coronavirus.R
 import com.example.coronavirus.data.model.WeeklyCase
+import com.example.coronavirus.ui.ExtensionUtil.formatNumber
 
 @Composable
 fun WeeklyCaseList(weeklyCases: List<WeeklyCase>) {
@@ -52,13 +54,16 @@ fun WeeklyCase(
                 )
                 if (isExpand) {
                     Text(
-                        text = weeklyCase.totalCumCases.toString(),
+                        text = stringResource(
+                            id = R.string.item_weekly_total_case,
+                            weeklyCase.totalCumCases.formatNumber()
+                        ),
                         style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
                 } else {
                     Text(
-                        text = weeklyCase.weeklyCumCases.toString(),
+                        text = weeklyCase.weeklyCumCases.formatNumber(),
                         style = MaterialTheme.typography.titleMedium,
                     )
                 }

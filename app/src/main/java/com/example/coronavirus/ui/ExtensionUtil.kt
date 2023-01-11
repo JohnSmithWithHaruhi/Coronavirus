@@ -1,4 +1,4 @@
-package com.example.coronavirus
+package com.example.coronavirus.ui
 
 /**
  * Class for extensions.

@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coronavirus.data.model.DailyNum
+import com.example.coronavirus.ui.ExtensionUtil.formatNumber
 
 @Composable
 fun DailyCaseList(dailyCases: List<DailyNum>) {
@@ -16,7 +17,7 @@ fun DailyCaseList(dailyCases: List<DailyNum>) {
         dailyCases.map {
             DailyCase(
                 dayOfWeek = it.dayOfWeek,
-                dailyCase = it.dailyCumCases.toString(),
+                dailyCase = it.dailyCumCases.formatNumber(),
             )
         }
     }
