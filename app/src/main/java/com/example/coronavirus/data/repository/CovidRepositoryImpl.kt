@@ -67,8 +67,7 @@ class CovidRepositoryImpl @Inject constructor(
                             .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)),
                         weeklyCumCases = weeklyCumCases,
                         totalCumCases = totalCumCases,
-                        dailyCaseList = dailyList,
-                        isExpand = false
+                        dailyCaseList = dailyList
                     )
                 )
 

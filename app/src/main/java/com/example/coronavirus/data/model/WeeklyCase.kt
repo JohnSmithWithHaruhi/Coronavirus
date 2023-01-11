@@ -7,8 +7,7 @@ data class WeeklyCase(
     val date: String,
     val weeklyCumCases: Int,
     val totalCumCases: Int,
-    val dailyCaseList: List<DailyNum>,
-    var isExpand: Boolean
+    val dailyCaseList: List<DailyNum>
 )
 
 /**

@@ -6,7 +6,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -17,18 +19,24 @@ import com.example.coronavirus.data.model.WeeklyCase
 
 @Composable
 fun WeeklyCaseList(weeklyCases: List<WeeklyCase>) {
+    val expandStatusList = remember { List(weeklyCases.size) { false }.toMutableStateList() }
+
     LazyColumn {
-        weeklyCases.map {
-            item { WeeklyCase(it) }
+        weeklyCases.mapIndexed { index, weeklyCase ->
+            val isExpand = expandStatusList[index]
+            item {
+                WeeklyCase(weeklyCase, isExpand) {
+                    expandStatusList[index] = !isExpand
+                }
+            }
         }
     }
 }
 
 @Composable
 fun WeeklyCase(
-    weeklyCase: WeeklyCase
+    weeklyCase: WeeklyCase, isExpand: Boolean, onExpand: () -> Unit
 ) {
-    var isExpand by remember { mutableStateOf(false) }
     Column {
         Row(
             modifier = Modifier
@@ -56,7 +64,7 @@ fun WeeklyCase(
                 }
             }
             Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = { isExpand = !isExpand }) {
+            IconButton(onClick = onExpand) {
                 if (isExpand) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_expand_less_24dp),
@@ -84,22 +92,19 @@ fun WeeklyCaseListPreview() {
             date = "May 7, 2022",
             weeklyCumCases = 75809,
             totalCumCases = 22181289,
-            dailyCaseList = listOf(),
-            isExpand = false
+            dailyCaseList = listOf()
         ),
         WeeklyCase(
             date = "May 7, 2022",
             weeklyCumCases = 75809,
             totalCumCases = 22181289,
-            dailyCaseList = listOf(),
-            isExpand = false
+            dailyCaseList = listOf()
         ),
         WeeklyCase(
             date = "May 7, 2022",
             weeklyCumCases = 75809,
             totalCumCases = 22181289,
-            dailyCaseList = listOf(),
-            isExpand = false
+            dailyCaseList = listOf()
         ),
     )
     WeeklyCaseList(weeklyCases = weeklyCases)
@@ -112,8 +117,7 @@ fun WeeklyCasePreview() {
         date = "May 7, 2022",
         weeklyCumCases = 75809,
         totalCumCases = 22181289,
-        dailyCaseList = listOf(),
-        isExpand = false
+        dailyCaseList = listOf()
     )
-    WeeklyCase(weeklyCase)
+    WeeklyCase(weeklyCase, false) {}
 }
