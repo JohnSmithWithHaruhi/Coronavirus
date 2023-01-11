@@ -1,6 +1,6 @@
-package com.example.coronavirus.data.datasource
+package com.example.covidcase.datasource
 
-import com.example.coronavirus.data.entity.DailyCaseList
+import com.example.covidcase.entity.DailyCaseList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

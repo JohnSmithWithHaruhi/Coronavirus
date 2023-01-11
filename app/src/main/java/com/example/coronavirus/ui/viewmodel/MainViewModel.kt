@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.coronavirus.data.model.WeeklyCase
-import com.example.coronavirus.data.repository.CovidRepository
+import com.example.covidcase.model.WeeklyCase
+import com.example.covidcase.repository.CovidRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

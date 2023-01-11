@@ -1,6 +1,6 @@
-package com.example.coronavirus.data.repository
+package com.example.covidcase.repository
 
-import com.example.coronavirus.data.model.WeeklyCase
+import com.example.covidcase.model.WeeklyCase
 
 /**
  * Repository provides data about covid.

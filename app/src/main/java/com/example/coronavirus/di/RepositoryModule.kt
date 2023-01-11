@@ -1,9 +1,9 @@
 package com.example.coronavirus.di
 
-import com.example.coronavirus.data.datasource.CovidNetworkDatasource
-import com.example.coronavirus.data.datasource.CovidService
-import com.example.coronavirus.data.repository.CovidRepository
-import com.example.coronavirus.data.repository.CovidRepositoryImpl
+import com.example.covidcase.datasource.CovidNetworkDatasource
+import com.example.covidcase.datasource.CovidService
+import com.example.covidcase.repository.CovidRepository
+import com.example.covidcase.repository.CovidRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

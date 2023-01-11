@@ -1,10 +1,10 @@
-package com.example.coronavirus.data.repository
+package com.example.covidcase.repository
 
 import androidx.annotation.VisibleForTesting
-import com.example.coronavirus.data.datasource.CovidNetworkDatasource
-import com.example.coronavirus.data.entity.DailyCase
-import com.example.coronavirus.data.model.DailyNum
-import com.example.coronavirus.data.model.WeeklyCase
+import com.example.covidcase.datasource.CovidNetworkDatasource
+import com.example.covidcase.entity.DailyCase
+import com.example.covidcase.model.DailyNum
+import com.example.covidcase.model.WeeklyCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException

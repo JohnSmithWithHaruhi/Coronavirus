@@ -1,4 +1,4 @@
-package com.example.coronavirus.data.entity
+package com.example.covidcase.entity
 
 import com.google.gson.annotations.SerializedName
 

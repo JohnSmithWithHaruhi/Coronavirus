@@ -1,4 +1,4 @@
-package com.example.coronavirus.data.model
+package com.example.covidcase.model
 
 /**
  * Model holds all data for weekly case.
