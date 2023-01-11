@@ -1,4 +1,4 @@
-package com.example.coronavirus.ui.view
+package com.example.weeklycase
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,9 +15,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.coronavirus.R
 import com.example.covidcase.model.WeeklyCase
-import com.example.coronavirus.ui.ExtensionUtil.formatNumber
+import com.example.weeklycase.ExtensionUtil.formatNumber
 
 @Composable
 fun WeeklyCaseList(weeklyCases: List<WeeklyCase>) {

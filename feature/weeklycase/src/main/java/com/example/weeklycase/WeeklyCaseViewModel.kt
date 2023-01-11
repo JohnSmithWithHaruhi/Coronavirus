@@ -1,4 +1,4 @@
-package com.example.coronavirus.ui.viewmodel
+package com.example.weeklycase
 
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -18,7 +18,7 @@ import javax.inject.Inject
  * Main activity's view model.
  */
 @HiltViewModel
-class MainViewModel @Inject constructor(private val covidRepository: CovidRepository) :
+class WeeklyCaseViewModel @Inject constructor(private val covidRepository: CovidRepository) :
     ViewModel() {
 
     private val _mainUiState = MutableStateFlow<MainUiState>(MainUiState.Loading)

@@ -1,4 +1,4 @@
-package com.example.coronavirus.di
+package com.example.covidcase.di
 
 import com.example.covidcase.datasource.CovidNetworkDatasource
 import com.example.covidcase.datasource.CovidService

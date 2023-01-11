@@ -14,4 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Coronavirus"
 include ':app'
+include ':feature:weeklycase'
 include ':data:covidcase'

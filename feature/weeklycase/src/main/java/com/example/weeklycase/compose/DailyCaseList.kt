@@ -1,4 +1,4 @@
-package com.example.coronavirus.ui.view
+package com.example.weeklycase
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.covidcase.model.DailyNum
-import com.example.coronavirus.ui.ExtensionUtil.formatNumber
+import com.example.weeklycase.ExtensionUtil.formatNumber
 
 @Composable
 fun DailyCaseList(dailyCases: List<DailyNum>) {
