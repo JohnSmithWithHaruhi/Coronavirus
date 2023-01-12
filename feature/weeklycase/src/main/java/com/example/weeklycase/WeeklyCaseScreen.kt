@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun WeeklyCaseScreen(
-    mainUiState: MainUiState,
+    weeklyCaseUiState: WeeklyCaseUiState,
     searchAreaDialogUiState: SearchAreaDialogUiState,
     onReload: () -> Unit,
     onSelectSearchArea: () -> Unit
@@ -20,17 +20,17 @@ fun WeeklyCaseScreen(
     Scaffold(modifier = Modifier.fillMaxSize(),
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
-            if (mainUiState is MainUiState.Success) {
+            if (weeklyCaseUiState is WeeklyCaseUiState.Success) {
                 FloatingActionButton({ searchAreaDialogUiState.setShowDialog(true) }) {
                     Icon(Icons.Default.Search, contentDescription = "")
                 }
             }
         }) {
-        when (mainUiState) {
-            MainUiState.Error -> ErrorScreen(onReload)
-            MainUiState.Loading -> LoadingScreen()
-            is MainUiState.Success -> {
-                WeeklyCaseList(weeklyCases = mainUiState.weeklyCaseList)
+        when (weeklyCaseUiState) {
+            WeeklyCaseUiState.Error -> ErrorScreen(onReload)
+            WeeklyCaseUiState.Loading -> LoadingScreen()
+            is WeeklyCaseUiState.Success -> {
+                WeeklyCaseList(weeklyCases = weeklyCaseUiState.weeklyCaseList)
                 if (searchAreaDialogUiState.shouldShowDialog) {
                     SearchAreaDialog(
                         searchAreaDialogUiState = searchAreaDialogUiState,

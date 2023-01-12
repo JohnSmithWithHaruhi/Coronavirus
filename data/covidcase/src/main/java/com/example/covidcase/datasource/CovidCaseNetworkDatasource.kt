@@ -7,8 +7,8 @@ import javax.inject.Inject
 /**
  * Provides covid data from network.
  */
-class CovidNetworkDatasource @Inject constructor(
-    private val service: CovidService
+class CovidCaseNetworkDatasource @Inject constructor(
+    private val service: CovidCaseService
 ) {
     private companion object {
         private const val structure =

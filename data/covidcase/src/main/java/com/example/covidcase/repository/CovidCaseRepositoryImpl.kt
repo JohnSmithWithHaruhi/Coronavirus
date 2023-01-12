@@ -1,7 +1,7 @@
 package com.example.covidcase.repository
 
 import androidx.annotation.VisibleForTesting
-import com.example.covidcase.datasource.CovidNetworkDatasource
+import com.example.covidcase.datasource.CovidCaseNetworkDatasource
 import com.example.covidcase.entity.DailyCase
 import com.example.covidcase.model.DailyNum
 import com.example.covidcase.model.WeeklyCase
@@ -18,22 +18,22 @@ import java.util.*
 import javax.inject.Inject
 
 /**
- * Class implemented [CovidRepository].
+ * Class implemented [CovidCaseRepository].
  */
-class CovidRepositoryImpl @Inject constructor(
-    private val covidNetworkDatasource: CovidNetworkDatasource
-) : CovidRepository {
+class CovidCaseRepositoryImpl @Inject constructor(
+    private val covidCaseNetworkDatasource: CovidCaseNetworkDatasource
+) : CovidCaseRepository {
 
-    override suspend fun fetchWeeklyCaseList(area: CovidRepository.SearchArea): List<WeeklyCase> {
+    override suspend fun fetchWeeklyCaseList(area: CovidCaseRepository.SearchArea): List<WeeklyCase> {
         return withContext(Dispatchers.IO) {
             val areaType = when (area) {
-                CovidRepository.SearchArea.UnitedKingdom -> "overview"
-                CovidRepository.SearchArea.NorthernIreland -> "nation;areaName=Northern Ireland"
+                CovidCaseRepository.SearchArea.UnitedKingdom -> "overview"
+                CovidCaseRepository.SearchArea.NorthernIreland -> "nation;areaName=Northern Ireland"
                 else -> "nation;areaName=${area.name}"
             }
 
             val response = try {
-                covidNetworkDatasource.getCases(areaType).execute()
+                covidCaseNetworkDatasource.getCases(areaType).execute()
             } catch (e: IOException) {
                 return@withContext emptyList()
             }

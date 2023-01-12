@@ -1,9 +1,9 @@
 package com.example.covidcase.di
 
-import com.example.covidcase.datasource.CovidNetworkDatasource
-import com.example.covidcase.datasource.CovidService
-import com.example.covidcase.repository.CovidRepository
-import com.example.covidcase.repository.CovidRepositoryImpl
+import com.example.covidcase.datasource.CovidCaseNetworkDatasource
+import com.example.covidcase.datasource.CovidCaseService
+import com.example.covidcase.repository.CovidCaseRepository
+import com.example.covidcase.repository.CovidCaseRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,9 +20,9 @@ import javax.inject.Singleton
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun bindCovidRepository(
-        covidRepositoryImpl: CovidRepositoryImpl
-    ): CovidRepository
+    abstract fun bindCovidCaseRepository(
+        covidRepositoryImpl: CovidCaseRepositoryImpl
+    ): CovidCaseRepository
 }
 
 @InstallIn(SingletonComponent::class)
@@ -31,14 +31,14 @@ object NetworkDatasourceModule {
 
     @Provides
     @Singleton
-    fun provideCovidNetworkDatasource(service: CovidService): CovidNetworkDatasource {
-        return CovidNetworkDatasource(service)
+    fun provideCovidCaseNetworkDatasource(service: CovidCaseService): CovidCaseNetworkDatasource {
+        return CovidCaseNetworkDatasource(service)
     }
 
     @Provides
     @Singleton
-    fun provideCovidService(retrofit: Retrofit): CovidService {
-        return retrofit.create(CovidService::class.java)
+    fun provideCovidCaseService(retrofit: Retrofit): CovidCaseService {
+        return retrofit.create(CovidCaseService::class.java)
     }
 
     @Provides

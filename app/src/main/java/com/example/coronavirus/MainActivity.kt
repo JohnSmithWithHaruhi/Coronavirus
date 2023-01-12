@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             WeeklyCaseScreen(
-                mainUiState = viewModel.mainUiState.collectAsStateWithLifecycle().value,
+                weeklyCaseUiState = viewModel.weeklyCaseUiState.collectAsStateWithLifecycle().value,
                 searchAreaDialogUiState = viewModel.searchAreaDialogUiState.collectAsStateWithLifecycle().value,
                 onReload = viewModel::reload,
                 onSelectSearchArea = viewModel::selectSearchArea,

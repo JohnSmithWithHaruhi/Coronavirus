@@ -5,7 +5,7 @@ import com.example.covidcase.model.WeeklyCase
 /**
  * Repository provides data about covid.
  */
-interface CovidRepository {
+interface CovidCaseRepository {
 
     /**
      * Type of area to filter.

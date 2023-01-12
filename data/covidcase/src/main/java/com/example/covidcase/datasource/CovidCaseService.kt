@@ -8,7 +8,7 @@ import retrofit2.http.Query
 /**
  * This interface is for retrofit.
  */
-interface CovidService {
+interface CovidCaseService {
     @GET("data")
     fun getDailyCaseList(
         @Query("filters") filters: String,

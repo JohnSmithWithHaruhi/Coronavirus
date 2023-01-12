@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.covidcase.model.WeeklyCase
-import com.example.covidcase.repository.CovidRepository
+import com.example.covidcase.repository.CovidCaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,13 +18,14 @@ import javax.inject.Inject
  * Main activity's view model.
  */
 @HiltViewModel
-class WeeklyCaseViewModel @Inject constructor(private val covidRepository: CovidRepository) :
-    ViewModel() {
+class WeeklyCaseViewModel @Inject constructor(
+    private val covidCaseRepository: CovidCaseRepository
+) : ViewModel() {
 
-    private val _mainUiState = MutableStateFlow<MainUiState>(MainUiState.Loading)
+    private val _weeklyCaseUiState = MutableStateFlow<WeeklyCaseUiState>(WeeklyCaseUiState.Loading)
     private val _searchAreaDialogUiState = MutableStateFlow(SearchAreaDialogUiState())
 
-    val mainUiState: StateFlow<MainUiState> = _mainUiState
+    val weeklyCaseUiState: StateFlow<WeeklyCaseUiState> = _weeklyCaseUiState
     val searchAreaDialogUiState: StateFlow<SearchAreaDialogUiState> = _searchAreaDialogUiState
 
     init {
@@ -46,15 +47,15 @@ class WeeklyCaseViewModel @Inject constructor(private val covidRepository: Covid
     }
 
     private fun loadWeeklyCaseList() {
-        _mainUiState.value = MainUiState.Loading
+        _weeklyCaseUiState.value = WeeklyCaseUiState.Loading
         val selectedItem = _searchAreaDialogUiState.value.selectedItem
-        val area = CovidRepository.SearchArea.values()[selectedItem]
+        val area = CovidCaseRepository.SearchArea.values()[selectedItem]
         viewModelScope.launch {
-            val weekList = covidRepository.fetchWeeklyCaseList(area)
+            val weekList = covidCaseRepository.fetchWeeklyCaseList(area)
             if (weekList.isEmpty()) {
-                _mainUiState.value = MainUiState.Error
+                _weeklyCaseUiState.value = WeeklyCaseUiState.Error
             } else {
-                _mainUiState.value = MainUiState.Success(weekList)
+                _weeklyCaseUiState.value = WeeklyCaseUiState.Success(weekList)
             }
         }
     }
@@ -65,10 +66,10 @@ class WeeklyCaseViewModel @Inject constructor(private val covidRepository: Covid
  */
 @Stable
 class SearchAreaDialogUiState {
-    val itemList: List<String> = CovidRepository.SearchArea.values().map {
+    val itemList: List<String> = CovidCaseRepository.SearchArea.values().map {
         when (it) {
-            CovidRepository.SearchArea.UnitedKingdom -> "United Kingdom"
-            CovidRepository.SearchArea.NorthernIreland -> "Northern Ireland"
+            CovidCaseRepository.SearchArea.UnitedKingdom -> "United Kingdom"
+            CovidCaseRepository.SearchArea.NorthernIreland -> "Northern Ireland"
             else -> it.name
         }
     }
@@ -87,8 +88,8 @@ class SearchAreaDialogUiState {
     }
 }
 
-sealed interface MainUiState {
-    data class Success(val weeklyCaseList: List<WeeklyCase>) : MainUiState
-    object Error : MainUiState
-    object Loading : MainUiState
+sealed interface WeeklyCaseUiState {
+    data class Success(val weeklyCaseList: List<WeeklyCase>) : WeeklyCaseUiState
+    object Error : WeeklyCaseUiState
+    object Loading : WeeklyCaseUiState
 }
